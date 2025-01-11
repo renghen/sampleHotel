@@ -2,8 +2,10 @@ package com.renghen.hotel
 
 import scala.collection.mutable.Buffer
 
+type RoomType = Int // TODO refactor to a newtype or Opaque
+
 object RoomTypes:
-  val roomTypes: Buffer[String] = Buffer(
+  val types: Buffer[String] = Buffer(
     "Suite",
     "Connecting rooms",
     "Double room",
