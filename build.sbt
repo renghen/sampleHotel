@@ -34,6 +34,7 @@ lazy val rootProject = (project in file(".")).settings(
     organization := "com.renghen",
     scalaVersion := "3.5.2",
     libraryDependencies ++= tapirLibs ++ jsonLibs ++ logLibs ++ testLibs,
-    testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework"))
+    testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework")),
+    scalacOptions ++= Seq("-deprecation", "-feature")
   )
 )
