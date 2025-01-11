@@ -11,6 +11,7 @@ final case class Customer(
     id: String,
     username: String,
     password: String,
+    title: String,
     firstName: String,
     lastName: String,
     address: Address,

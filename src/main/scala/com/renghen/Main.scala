@@ -8,7 +8,7 @@ import zio.logging.backend.SLF4J
 
 object Main extends ZIOAppDefault:
   override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
-    SLF4J.slf4j(LogLevel.Debug, LogFormat.default)
+    SLF4J.slf4j(LogFormat.default)
 
   override def run: ZIO[ZIOAppArgs & Scope, Any, Any] =
     val serverOptions: ZioHttpServerOptions[Any] =
