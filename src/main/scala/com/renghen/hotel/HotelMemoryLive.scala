@@ -6,16 +6,16 @@ import scala.collection.mutable.HashMap
 import java.util.Random
 import java.time.LocalDateTime
 
-object HotelMemoryLive extends HotelOperations:
+object HotelMemoryLive extends HotelOps:
 
   override def getHotels(): List[HotelData] = hotels.map(h => HotelData(h.name, h.address)).toList
 
   override def getHotelAvailableRooms(hotelName: String, roomType: Option[RoomType])
-      : Either[HotelOperationError, List[RoomNumber]] =
+      : Either[HotelOpsError, List[RoomNumber]] =
     val hotel = hotels.find(h => h.name == hotelName)
 
     hotel match
-      case None        => Left(HotelOperationError.HotelNotFound)
+      case None        => Left(HotelOpsError.HotelNotFound)
       case Some(value) =>
         val roomsAvailable = roomType match
           case None => value.rooms.filter((roomNumber, room) => room.status == RoomStatus.Available)
@@ -35,20 +35,20 @@ object HotelMemoryLive extends HotelOperations:
       hotelName: String,
       roomNumber: RoomNumber,
       customerId: String,
-    ): Either[HotelOperationError, BookedRoom] =
+    ): Either[HotelOpsError, BookedRoom] =
     val hotelFound = hotels.find(h => h.name == hotelName)
     hotelFound match
-      case None        => Left(HotelOperationError.HotelNotFound)
+      case None        => Left(HotelOpsError.HotelNotFound)
       case Some(hotel) =>
         hotel.rooms.get(roomNumber) match
-          case None       => Left(HotelOperationError.RoomNotFound)
+          case None       => Left(HotelOpsError.RoomNotFound)
           case Some(room) =>
             room.status match
               case RoomStatus.Available =>
                 val bookedRoom = BookedRoom(roomNumber, LocalDateTime.now(), customerId)
                 Right(bookedRoom)
-              case RoomStatus.Booked    => Left(HotelOperationError.RoomIsNotAvailable)
-              case RoomStatus.Occupied  => Left(HotelOperationError.RoomIsNotAvailable)
+              case RoomStatus.Booked    => Left(HotelOpsError.RoomIsNotAvailable)
+              case RoomStatus.Occupied  => Left(HotelOpsError.RoomIsNotAvailable)
     end match
   end bookRoom
 

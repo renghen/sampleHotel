@@ -27,20 +27,20 @@ final case class BookedRoom(
     dateTime: LocalDateTime,
     who: String) //change from string to customer after datamodel for customer is done
 
-enum HotelOperationError:
+enum HotelOpsError:
   case HotelNotFound, RoomNotFound, RoomIsNotAvailable
-end HotelOperationError
+end HotelOpsError
 
-trait HotelOperations:
+trait HotelOps:
   def getHotels(): List[HotelData]
   
   def getHotelAvailableRooms(hotelName: String, roomType: Option[RoomType])
-      : Either[HotelOperationError, List[RoomNumber]]
+      : Either[HotelOpsError, List[RoomNumber]]
 
   def bookRoom(
       hotelName: String,
       roomNumber: RoomNumber,
       customerId: String,
-    ): Either[HotelOperationError,BookedRoom]
+    ): Either[HotelOpsError,BookedRoom]
 
-end HotelOperations
+end HotelOps
