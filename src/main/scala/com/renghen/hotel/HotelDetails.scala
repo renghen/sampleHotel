@@ -1,6 +1,7 @@
 package com.renghen.hotel
 
 import com.renghen.common.Address
+import scala.collection.mutable.HashMap
 
 enum RoomStatus:
   case Available, Booked, Occupied
@@ -8,11 +9,10 @@ enum RoomStatus:
 end RoomStatus
 
 final case class Room(
-    number: String,
-    roomType: String,
+    roomType: Int,
     status: RoomStatus)
 
 final case class HotelDetails(
     name: String,
-    address: Address,
-    rooms: Room)
+    address: Address,    
+    rooms: HashMap[Int,Room])
