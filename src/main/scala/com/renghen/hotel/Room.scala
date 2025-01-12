@@ -1,6 +1,6 @@
 package com.renghen.hotel
 
-import scala.collection.mutable.Buffer
+import collection.mutable.Buffer
 
 type RoomType = Int // TODO refactor to a newtype or Opaque
 

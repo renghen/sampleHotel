@@ -22,17 +22,17 @@ object Endpoints:
     .in(query[User]("name"))
     .out(stringBody)
 
-  val helloServerEndpoint: ZServerEndpoint[Any, Any]         =
+  val helloServerEndpoint: ZServerEndpoint[Any, Any] =
     helloEndpoint.serverLogicSuccess(user => ZIO.succeed(s"Hello ${user.name}"))
 
-  given codecBooks: JsonValueCodec[List[Book]]                  = JsonCodecMaker.make
+  given codecBooks: JsonValueCodec[List[Book]] = JsonCodecMaker.make
 
   val booksListing: PublicEndpoint[Unit, Unit, List[Book], Any] = endpoint
     .get
     .in("books" / "list" / "all")
     .out(jsonBody[List[Book]])
 
-  val booksListingServerEndpoint: ZServerEndpoint[Any, Any]     =
+  val booksListingServerEndpoint: ZServerEndpoint[Any, Any] =
     booksListing.serverLogicSuccess(_ => ZIO.succeed(Library.books))
 
   val apiEndpoints: List[ZServerEndpoint[Any, Any]] =

@@ -4,7 +4,7 @@ import com.renghen.common.Address
 import com.renghen.customer.{Customer, CustomerDataResponse}
 import com.renghen.customer.CustomerOpsError
 
-import scala.collection.mutable.HashMap
+import collection.mutable.HashMap
 import java.time.LocalDate
 
 enum RoomStatus:
@@ -43,6 +43,6 @@ trait HotelOps:
       hotelName: String,
       roomNumber: RoomNumber,
       customerId: String,
-    ): Either[HotelOpsError | CustomerOpsError , BookedRoom]
+    ): Either[HotelOpsError | CustomerOpsError, BookedRoom]
 
 end HotelOps

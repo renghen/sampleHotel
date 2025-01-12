@@ -18,15 +18,13 @@ object CustomerTest extends ZIOSpecDefault:
         customer.address.country == "Mauritius",
       )
     },
-
     test("Customer NOT Found") {
-      val id            = "11"
+      val id               = "11"
       val customerNotFound = ZIO.fromEither(customerRepo.findCustomerById(id)).flip
       for error <- customerNotFound
       yield assertTrue(error == CustomerOpsError.CustomerNotFound)
-        
-    }
 
+    },
   )
-  
+
 end CustomerTest

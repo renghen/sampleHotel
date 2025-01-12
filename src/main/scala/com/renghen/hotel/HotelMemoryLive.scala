@@ -1,6 +1,6 @@
 package com.renghen.hotel
 
-import scala.collection.mutable.HashMap
+import collection.mutable.HashMap
 
 import java.util.Random
 import java.time.LocalDate
@@ -8,7 +8,7 @@ import java.time.LocalDate
 import com.renghen.customer.CustomerOps
 import com.renghen.common.Address
 import com.renghen.customer.CustomerOpsError
-final class HotelMemoryLive(customerOps : CustomerOps) extends HotelOps:
+final class HotelMemoryLive(customerOps: CustomerOps) extends HotelOps:
   override def getHotels(): List[HotelData] = hotels.map(h => HotelData(h.name, h.address)).toList
 
   override def getHotelAvailableRooms(hotelName: String, roomType: Option[RoomType])
@@ -47,8 +47,8 @@ final class HotelMemoryLive(customerOps : CustomerOps) extends HotelOps:
             room.status match
               case RoomStatus.Available =>
                 customerOps.findCustomerById(customerId) match
-                  case Left(value) => Left(value)
-                  case Right(customer) => 
+                  case Left(value)     => Left(value)
+                  case Right(customer) =>
                     val bookedRoom = BookedRoom(roomNumber, LocalDate.now(), customer)
                     Right(bookedRoom)
               case RoomStatus.Booked    => Left(HotelOpsError.RoomIsNotAvailable)
