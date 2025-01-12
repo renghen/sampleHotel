@@ -41,6 +41,6 @@ final case class CustomerDataResponse(
 
 trait CustomerOps:
   def findCustomerById(customerId: String): Either[CustomerOpsError, CustomerDataResponse]
-  def updateCustomer(customerId: String, data: CustomerDataOps)
-      : Either[CustomerOpsError, CustomerDataResponse]
+//   def updateCustomer(customerId: String, data: CustomerDataOps)
+//       : Either[CustomerOpsError, CustomerDataResponse]
 end CustomerOps

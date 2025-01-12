@@ -2,10 +2,10 @@ package com.renghen.hotel
 
 import com.renghen.common.Address
 import com.renghen.customer.{Customer, CustomerDataResponse}
+import com.renghen.customer.CustomerOpsError
 
 import scala.collection.mutable.HashMap
-import java.time.LocalDateTime
-import com.renghen.customer.CustomerOpsError
+import java.time.LocalDate
 
 enum RoomStatus:
   case Available, Booked, Occupied
@@ -26,7 +26,7 @@ final case class Hotel(
 final case class HotelData(name: String, address: Address)
 final case class BookedRoom(
     roomNumber: RoomNumber,
-    dateTime: LocalDateTime,
+    dateTime: LocalDate,
     customer: CustomerDataResponse)
 
 enum HotelOpsError:

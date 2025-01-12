@@ -3,7 +3,7 @@ package com.renghen.hotel
 import scala.collection.mutable.HashMap
 
 import java.util.Random
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 import com.renghen.customer.CustomerOps
 import com.renghen.common.Address
@@ -49,7 +49,7 @@ final class HotelMemoryLive(customerOps : CustomerOps) extends HotelOps:
                 customerOps.findCustomerById(customerId) match
                   case Left(value) => Left(value)
                   case Right(customer) => 
-                    val bookedRoom = BookedRoom(roomNumber, LocalDateTime.now(), customer)
+                    val bookedRoom = BookedRoom(roomNumber, LocalDate.now(), customer)
                     Right(bookedRoom)
               case RoomStatus.Booked    => Left(HotelOpsError.RoomIsNotAvailable)
               case RoomStatus.Occupied  => Left(HotelOpsError.RoomIsNotAvailable)

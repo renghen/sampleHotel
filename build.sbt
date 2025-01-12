@@ -20,6 +20,8 @@ val logLibs = Seq(
   "dev.zio" %% "zio-logging-slf4j" % zioLoggingVersion
 )
 
+val utilsLibs = Seq("io.scalaland" %% "chimney" % "1.6.0")
+
 val testLibs = Seq(
   "dev.zio" %% "zio-test" % "2.0.13" % Test,
   "dev.zio" %% "zio-test-sbt" % "2.0.13" % Test,
@@ -33,7 +35,7 @@ lazy val rootProject = (project in file(".")).settings(
     version := "0.1.0",
     organization := "com.renghen",
     scalaVersion := "3.5.2",
-    libraryDependencies ++= tapirLibs ++ jsonLibs ++ logLibs ++ testLibs,
+    libraryDependencies ++= tapirLibs ++ jsonLibs ++ utilsLibs ++ logLibs ++ testLibs,
     testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework")),
     scalacOptions ++= Seq("-deprecation", "-feature")
   )
