@@ -10,12 +10,13 @@ class SessionMemoryLive extends SessionOps:
 
   override def create(customer: CustomerDataResponse): Either[SessionOpErrors, Session] =
     registry.values.find(sess => sess.customer.username == customer.username) match
-      case None        =>
+      case None    =>
         val uuid    = UUID.randomUUID()
         val session = Session(uuid, customer, LocalDateTime.now())
         registry.addOne(uuid, session)
         Right(session)
-      case Some(value) => Left(SessionOpErrors.SessionAlreadyExist)
+      case Some(v) =>
+        Left(SessionOpErrors.SessionAlreadyExist)
 
   override def remove(id: UUID): Either[SessionOpErrors, Session] =
     registry.find((key, value) => key == id) match

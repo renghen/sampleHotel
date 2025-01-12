@@ -11,7 +11,7 @@ final case class Session(
     lastAccess: LocalDateTime)
 
 enum SessionOpErrors:
-  case SessionNotFound, SessionExpired, SessionAlreadyExist
+  case SessionNotFound, SessionAlreadyExist
 end SessionOpErrors
 
 trait SessionOps:
