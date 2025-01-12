@@ -1,9 +1,11 @@
 package com.renghen.hotel
 
 import com.renghen.common.Address
+import com.renghen.customer.{Customer, CustomerDataResponse}
+
 import scala.collection.mutable.HashMap
 import java.time.LocalDateTime
-import com.renghen.customer.Customer
+import com.renghen.customer.CustomerOpsError
 
 enum RoomStatus:
   case Available, Booked, Occupied
@@ -25,7 +27,7 @@ final case class HotelData(name: String, address: Address)
 final case class BookedRoom(
     roomNumber: RoomNumber,
     dateTime: LocalDateTime,
-    who: String) //change from string to customer after datamodel for customer is done
+    customer: CustomerDataResponse)
 
 enum HotelOpsError:
   case HotelNotFound, RoomNotFound, RoomIsNotAvailable
@@ -33,7 +35,7 @@ end HotelOpsError
 
 trait HotelOps:
   def getHotels(): List[HotelData]
-  
+
   def getHotelAvailableRooms(hotelName: String, roomType: Option[RoomType])
       : Either[HotelOpsError, List[RoomNumber]]
 
@@ -41,6 +43,6 @@ trait HotelOps:
       hotelName: String,
       roomNumber: RoomNumber,
       customerId: String,
-    ): Either[HotelOpsError,BookedRoom]
+    ): Either[HotelOpsError | CustomerOpsError , BookedRoom]
 
 end HotelOps

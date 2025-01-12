@@ -1,6 +1,7 @@
 package com.renghen.customer
 
 import com.renghen.common.Address
+import java.time.LocalDateTime
 
 final case class Customer(
     id: String,
@@ -11,7 +12,9 @@ final case class Customer(
     lastName: String,
     address: Address,
     email: Option[String],
-    mobile: String)
+    mobile: String,
+    dateCreated: LocalDateTime,
+    dateModify: LocalDateTime)
 
 enum CustomerOpsError:
   case CustomerNotFound
@@ -32,9 +35,12 @@ final case class CustomerDataResponse(
     username: String,
     address: Address,
     email: Option[String],
-    mobile: String)
+    mobile: String,
+    dateCreated: LocalDateTime,
+    dateModify: LocalDateTime)
 
 trait CustomerOps:
-  def findCustomerById(customerId: String): Either[CustomerOpsError, Customer]
-  def updateCustomer(customerId: String, data: CustomerDataOps): Either[CustomerOpsError, CustomerDataResponse]
+  def findCustomerById(customerId: String): Either[CustomerOpsError, CustomerDataResponse]
+  def updateCustomer(customerId: String, data: CustomerDataOps)
+      : Either[CustomerOpsError, CustomerDataResponse]
 end CustomerOps
