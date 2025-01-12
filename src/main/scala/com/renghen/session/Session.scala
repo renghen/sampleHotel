@@ -16,5 +16,6 @@ end SessionOpErrors
 
 trait SessionOps:
   def create(customer: CustomerDataResponse): Either[SessionOpErrors, Session]
+  def get(id: UUID): Either[SessionOpErrors, Session]
   def remove(id: UUID): Either[SessionOpErrors, Session]
 end SessionOps

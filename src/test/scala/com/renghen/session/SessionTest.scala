@@ -4,6 +4,7 @@ import zio.*
 import zio.test.*
 
 import com.renghen.customer.CustomerMemoryLive
+import java.util.UUID
 
 object SessionTest extends ZIOSpecDefault:
   override def spec = suite("SessionSpec")(
@@ -14,9 +15,11 @@ object SessionTest extends ZIOSpecDefault:
       val customerFound = ZIO.fromEither(customerRepo.findCustomerById(id))
 
       for
-        customer <- customerFound
-        session  <- ZIO.fromEither(sessionRepo.create(customer))
-        error    <- ZIO.fromEither(sessionRepo.create(customer)).flip
+        customer    <- customerFound
+        session     <- ZIO.fromEither(sessionRepo.create(customer))
+        errorCreate <- ZIO.fromEither(sessionRepo.create(customer)).flip
+        sessionGet  <- ZIO.fromEither(sessionRepo.get(session.id))
+        errorGet    <- ZIO.fromEither(sessionRepo.get(UUID.randomUUID())).flip
       yield assertTrue(
         session.customer.title == s"title_$id" && session.customer.firstName == s"firstName_$id" &&
         session.customer.lastName == s"lastName_$id" &&
@@ -25,7 +28,9 @@ object SessionTest extends ZIOSpecDefault:
         session.customer.address.street == s"Street_$id" &&
         session.customer.address.city == s"City_$id" &&
         session.customer.address.country == "Mauritius",
-        error == SessionOpErrors.SessionAlreadyExist,
+        errorCreate == SessionOpErrors.SessionAlreadyExist,
+        sessionGet.customer == session.customer,
+        errorGet == SessionOpErrors.SessionNotFound,
       )
       end for
     },
@@ -39,7 +44,8 @@ object SessionTest extends ZIOSpecDefault:
         customer       <- customerFound
         session        <- ZIO.fromEither(sessionRepo.create(customer))
         removedSession <- ZIO.fromEither(sessionRepo.remove(session.id))
-        error          <- ZIO.fromEither(sessionRepo.remove(session.id)).flip
+        errorRemove    <- ZIO.fromEither(sessionRepo.remove(session.id)).flip
+        errorGet       <- ZIO.fromEither(sessionRepo.get(session.id)).flip
       yield assertTrue(
         removedSession.customer.title == s"title_$id" &&
         removedSession.customer.firstName == s"firstName_$id" &&
@@ -50,7 +56,8 @@ object SessionTest extends ZIOSpecDefault:
         removedSession.customer.address.street == s"Street_$id" &&
         removedSession.customer.address.city == s"City_$id" &&
         removedSession.customer.address.country == "Mauritius",
-        error == SessionOpErrors.SessionNotFound,
+        errorRemove == SessionOpErrors.SessionNotFound,
+        errorGet == SessionOpErrors.SessionNotFound,
       )
       end for
     },

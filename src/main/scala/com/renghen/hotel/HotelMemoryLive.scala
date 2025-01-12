@@ -8,7 +8,8 @@ import java.time.LocalDate
 import com.renghen.customer.CustomerOps
 import com.renghen.common.Address
 import com.renghen.customer.CustomerOpsError
-final class HotelMemoryLive(customerOps: CustomerOps) extends HotelOps:
+import com.renghen.session.SessionOps
+final class HotelMemoryLive(session: SessionOps) extends HotelOps:
   override def getHotels(): List[HotelData] = hotels.map(h => HotelData(h.name, h.address)).toList
 
   override def getHotelAvailableRooms(hotelName: String, roomType: Option[RoomType])
@@ -35,7 +36,7 @@ final class HotelMemoryLive(customerOps: CustomerOps) extends HotelOps:
   override def bookRoom(
       hotelName: String,
       roomNumber: RoomNumber,
-      customerId: String,
+      sessionId: String,
     ): Either[HotelOpsError | CustomerOpsError, BookedRoom] =
     val hotelFound = hotels.find(h => h.name == hotelName)
     hotelFound match
@@ -46,11 +47,12 @@ final class HotelMemoryLive(customerOps: CustomerOps) extends HotelOps:
           case Some(room) =>
             room.status match
               case RoomStatus.Available =>
-                customerOps.findCustomerById(customerId) match
-                  case Left(value)     => Left(value)
-                  case Right(customer) =>
-                    val bookedRoom = BookedRoom(roomNumber, LocalDate.now(), customer)
-                    Right(bookedRoom)
+                // customerOps.findCustomerById(customerId) match
+                //   case Left(value)     => Left(value)
+                //   case Right(customer) =>
+                //     val bookedRoom = BookedRoom(roomNumber, LocalDate.now(), customer)
+                //     Right(bookedRoom)
+                ???
               case RoomStatus.Booked    => Left(HotelOpsError.RoomIsNotAvailable)
               case RoomStatus.Occupied  => Left(HotelOpsError.RoomIsNotAvailable)
     end match

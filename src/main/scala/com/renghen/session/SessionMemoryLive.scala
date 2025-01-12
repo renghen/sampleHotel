@@ -5,6 +5,7 @@ import java.util.UUID
 import java.time.LocalDateTime
 
 import com.renghen.customer.CustomerDataResponse
+import java.util as ju
 
 class SessionMemoryLive extends SessionOps:
 
@@ -24,6 +25,11 @@ class SessionMemoryLive extends SessionOps:
       case Some(_, session) =>
         registry.remove(id)
         Right(session)
+
+  override def get(id: UUID): Either[SessionOpErrors, Session] =
+    registry.find((key, value) => key == id) match
+      case None             => Left(SessionOpErrors.SessionNotFound)
+      case Some(_, session) => Right(session)
 
   private val registry = HashMap.empty[UUID, Session]
 end SessionMemoryLive
