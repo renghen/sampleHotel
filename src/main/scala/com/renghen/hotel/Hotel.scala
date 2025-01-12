@@ -6,6 +6,7 @@ import com.renghen.customer.CustomerOpsError
 
 import collection.mutable.HashMap
 import java.time.LocalDate
+import com.renghen.session.SessionOpErrors
 
 enum RoomStatus:
   case Available, Booked, Occupied
@@ -43,6 +44,6 @@ trait HotelOps:
       hotelName: String,
       roomNumber: RoomNumber,
       customerId: String,
-    ): Either[HotelOpsError | CustomerOpsError, BookedRoom]
+    ): Either[HotelOpsError | SessionOpErrors, BookedRoom]
 
 end HotelOps
