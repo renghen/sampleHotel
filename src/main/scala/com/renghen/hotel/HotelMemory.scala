@@ -11,7 +11,8 @@ import com.renghen.customer.CustomerOpsError
 import com.renghen.session.SessionOps
 import java.util.UUID
 import com.renghen.session.SessionOpErrors
-final class HotelMemoryLive(session: SessionOps) extends HotelOps:
+
+final class HotelMemory(session: SessionOps) extends HotelOps:
   override def getHotels(): List[HotelData] = hotels.map(h => HotelData(h.name, h.address)).toList
 
   override def getHotelAvailableRooms(hotelName: String, roomType: Option[RoomType])
@@ -76,4 +77,4 @@ final class HotelMemoryLive(session: SessionOps) extends HotelOps:
     Hotel(s"Hotel_$i", address, generateRooms(10))
   ).toArray
 
-end HotelMemoryLive
+end HotelMemory

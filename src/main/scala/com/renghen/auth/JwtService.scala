@@ -11,7 +11,7 @@ import java.util.UUID
 import scala.util.{Success, Try}
 import com.renghen.customer.CustomerOpsError
 
-object Jwt:
+class JwtService:
   final private val Issuer    = "renghen"
   final private val ClaimName = "userId"
   final private val JWTSecret = "somesecret"
@@ -42,4 +42,8 @@ object Jwt:
       case _                   =>
         // can add logic to also remove session or black list a session
         Left(CustomerOpsError.Unauthorized("Invalid token!"))
-end Jwt
+end JwtService
+
+object JwtService:
+  val live = ZLayer(ZIO.succeed(new JwtService))
+end JwtService

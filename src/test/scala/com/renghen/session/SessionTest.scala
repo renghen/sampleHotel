@@ -9,7 +9,7 @@ import java.util.UUID
 object SessionTest extends ZIOSpecDefault:
   override def spec = suite("SessionSpec")(
     test("create Session") {
-      val sessionRepo   = SessionMemoryLive()
+      val sessionRepo   = SessionMemory()
       val customerRepo  = CustomerMemoryLive()
       val id            = "1"
       val customerFound = ZIO.fromEither(customerRepo.findCustomerById(id))
@@ -35,7 +35,7 @@ object SessionTest extends ZIOSpecDefault:
       end for
     },
     test("remove Session") {
-      val sessionRepo   = SessionMemoryLive()
+      val sessionRepo   = SessionMemory()
       val customerRepo  = CustomerMemoryLive()
       val id            = "1"
       val customerFound = ZIO.fromEither(customerRepo.findCustomerById(id))

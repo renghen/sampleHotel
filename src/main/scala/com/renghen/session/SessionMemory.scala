@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import com.renghen.customer.CustomerDataResponse
 import java.util as ju
 
-class SessionMemoryLive extends SessionOps:
+class SessionMemory extends SessionOps:
 
   override def create(customer: CustomerDataResponse): Either[SessionOpErrors, Session] =
     registry.values.find(sess => sess.customer.username == customer.username) match
@@ -32,4 +32,4 @@ class SessionMemoryLive extends SessionOps:
       case Some(_, session) => Right(session)
 
   private val registry = HashMap.empty[UUID, Session]
-end SessionMemoryLive
+end SessionMemory
