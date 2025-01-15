@@ -9,9 +9,9 @@ import collection.mutable.HashMap
 import java.time.LocalDate
 
 enum RoomStatus:
-  case Available 
-  case Booked(durationInDays : Int, since : LocalDate)
-  case Occupied(durationInDays : Int, since : LocalDate)
+  case Available
+  case Booked(durationInDays: Int, since: LocalDate)
+  case Occupied(durationInDays: Int, since: LocalDate)
 
 end RoomStatus
 
@@ -29,7 +29,7 @@ final case class Hotel(
 final case class HotelData(name: String, address: Address)
 final case class BookedRoom(
     roomNumber: RoomNumber,
-    roomType : RoomType,
+    roomType: RoomType,
     dateTime: LocalDate,
     durationDay: Int,
     customer: CustomerDataResponse)

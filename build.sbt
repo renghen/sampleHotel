@@ -13,6 +13,10 @@ val jsonLibs        = Seq(
   "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % jsoniterVersion,
 )
 
+val securityLibs = Seq(
+  "com.auth0" % "java-jwt" % "4.4.0"
+)
+
 val zioLoggingVersion = "2.1.15"
 val logLibs           = Seq(
   "ch.qos.logback" % "logback-classic"   % "1.3.15",
@@ -35,7 +39,8 @@ lazy val rootProject = (project in file(".")).settings(
     version                           := "0.1.0",
     organization                      := "com.renghen",
     scalaVersion                      := "3.5.2",
-    libraryDependencies ++= tapirLibs ++ jsonLibs ++ utilsLibs ++ logLibs ++ testLibs,
+    libraryDependencies ++= tapirLibs ++ jsonLibs ++ utilsLibs
+      ++ logLibs ++ securityLibs ++ testLibs,
     testFrameworks                    := Seq(new TestFramework("zio.test.sbt.ZTestFramework")),
     scalacOptions ++= Seq("-deprecation", "-feature"),
     ThisBuild / assemblyMergeStrategy := {
@@ -50,7 +55,7 @@ lazy val rootProject = (project in file(".")).settings(
             MergeStrategy.filterDistinctLines
           case _                => MergeStrategy.discard
         }
-      case x =>
+      case x                                                                            =>
         val oldStrategy = (ThisBuild / assemblyMergeStrategy).value
         oldStrategy(x)
     },

@@ -1,0 +1,4 @@
+1) add endpoints for non authorized + json serialization
+2) add endpoint for authorized  + json serialization
+3) test for endpoints
+4) add ref/queue for reservation

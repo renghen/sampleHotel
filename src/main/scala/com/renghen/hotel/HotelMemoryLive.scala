@@ -45,16 +45,16 @@ final class HotelMemoryLive(session: SessionOps) extends HotelOps:
     hotelFound match
       case None        => Left(HotelOpsError.HotelNotFound)
       case Some(hotel) =>
-        val roomsAvailable = hotel.rooms.filter((_,r) => r.roomType == roomType && r.status == RoomStatus.Available)
-        if (roomsAvailable.size == 0) then
-          Left(HotelOpsError.RoomIsNotAvailable)
-        else            
+        val roomsAvailable =
+          hotel.rooms.filter((_, r) => r.roomType == roomType && r.status == RoomStatus.Available)
+        if roomsAvailable.size == 0 then Left(HotelOpsError.RoomIsNotAvailable)
+        else
           // TODO add logic for FIFO and room locking
           val roomNumber = ???
           session.get(UUID.fromString(sessionId)).map { sess =>
-            BookedRoom(roomNumber, roomType,LocalDate.now(), durationInDays, sess.customer)
+            BookedRoom(roomNumber, roomType, LocalDate.now(), durationInDays, sess.customer)
           }
-
+        end if
     end match
   end bookRoom
 

@@ -18,6 +18,9 @@ final case class Customer(
 
 enum CustomerOpsError:
   case CustomerNotFound
+  case Unauthorized(reason: String)
+  case JWTerror(error: String)
+
 end CustomerOpsError
 
 final case class CustomerDataOps(
