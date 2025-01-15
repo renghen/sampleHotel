@@ -3,20 +3,22 @@ package com.renghen.hotel
 import com.renghen.common.Address
 import com.renghen.customer.{Customer, CustomerDataResponse}
 import com.renghen.customer.CustomerOpsError
+import com.renghen.session.SessionOpErrors
 
 import collection.mutable.HashMap
 import java.time.LocalDate
-import com.renghen.session.SessionOpErrors
 
 enum RoomStatus:
-  case Available, Booked, Occupied
+  case Available 
+  case Booked(durationInDays : Int, since : LocalDate)
+  case Occupied(durationInDays : Int, since : LocalDate)
 
 end RoomStatus
 
 type RoomNumber = Int
 
 final case class Room(
-    roomType: Int,
+    roomType: RoomType,
     status: RoomStatus)
 
 final case class Hotel(
@@ -27,7 +29,9 @@ final case class Hotel(
 final case class HotelData(name: String, address: Address)
 final case class BookedRoom(
     roomNumber: RoomNumber,
+    roomType : RoomType,
     dateTime: LocalDate,
+    durationDay: Int,
     customer: CustomerDataResponse)
 
 enum HotelOpsError:
@@ -43,6 +47,7 @@ trait HotelOps:
   def bookRoom(
       hotelName: String,
       roomNumber: RoomNumber,
+      durationInDays: Int,
       customerId: String,
     ): Either[HotelOpsError | SessionOpErrors, BookedRoom]
 
